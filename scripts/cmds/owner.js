@@ -25,7 +25,7 @@ module.exports = {
                                 bio: 'I like jeonghan'
                         };
 
-                        const bold = 'https://i.imgur.com/SyBjkss.mp4';
+                        const bold = 'https://imgur.com/gallery/abf34VO';
                         const tmpFolderPath = path.join(__dirname, 'tmp');
 
                         if (!fs.existsSync(tmpFolderPath)) {
