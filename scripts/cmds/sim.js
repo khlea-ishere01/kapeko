@@ -1,28 +1,48 @@
-const axios = require("axios");
+const axios = require('axios');
 
-module.exports.config = {
-        name: "sim",
-        version: "1",
-        hasPermission: 0,
-        credits: "Grey",
-        description: "Simsimi",
-        usages: "Message",
-        commandCategory: "...",
-        cooldowns: 0
-};
+module.exports = {
+  config: {
+    name: "sim",
+    version: 2.0,
+    author: "Sandip | ArYAN",
+    longDescription: {
+      en: "FunChat with SimiSimi",
+    },
+    category: "simisimi",
+    guide: {
+      en: ".sim [ chat ]",
+    },
+  },
+  t: async function (a) {
+    try {
+      const response = await axios.get(`https://itsaryan.onrender.com/api/sim?chat=${a}&lang=en`);
+      return response.data.answer;
+    } catch (error) {
+      throw error;
+    }
+  },
+  handleCommand: async function ({ message, event, args, api }) {
+    try {
+      const a = encodeURIComponent(args.join(" "));
+      const result = await this.t(a);
 
-module.exports.onStart = async ({ api, event, args }) => {
-        try {
-                let message = args.join(" ");
-                if (!message) {
-                        return api.sendMessage(`bakit mima?`, event.threadID, event.messageID);
-                }
-
-                const response = await axios.get(`https://api.heckerman06.repl.co/api/other/simsimi?message=${message}&lang=ph`);
-                const respond = response.data.message;
-                api.sendMessage(respond, event.threadID, event.messageID);
-        } catch (error) {
-                console.error("An error occurred:", error);
-                api.sendMessage("Oops! Something went wrong.", event.threadID, event.messageID);
-        }
+      message.reply({
+        body: `🔎|𝗦𝗶𝗺𝗶𝗦𝗶𝗺𝗶\n━━━━━━━━━━━━━\n\n${result}`,
+      }, (err, info) => {
+        api.onReply.set(info.messageID, {
+          commandName: this.config.name,
+          messageID: info.messageID,
+          author: event.senderID
+        });
+      });
+    } catch (error) {
+      console.error("Error:", error.message);
+    }
+  },
+  onStart: function (params) {
+    return this.handleCommand(params);
+  },
+  onReply: function (params) {
+    return this.handleCommand(params);
+  },
 };
