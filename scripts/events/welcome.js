@@ -26,7 +26,7 @@ module.exports = {
 			session2: "noon",
 			session3: "afternoon",
 			session4: "evening",
-			welcomeMessage: "Thank you for inviting me to the group!\nBot prefix: %1\nTo view the list of commands, please enter: %1help",
+			welcomeMessage: "EYY KA MUNA EYY 🤟/nYo wassup, I'm azryteah. My prefix is #. ang nanay ko ay si Annaleiah Houtzhers, kaya ganito ang aking surname. Type #help to see list of commands. 🫡",
 			multiple1: "you",
 			multiple2: "you guys",
 			defaultWelcomeMessage: `Hello {userName}.\nWelcome {multiple} to the chat group: {boxName}\nHave a nice {session} 😊`
