@@ -1,0 +1,1 @@
+module.exports = { config: { name: "tid", role: 0, author: "Annaleiah", }, onStart: async function ({ message, threadsData, event }) { return message.reply(event.threadID); } };
