@@ -1,48 +1,39 @@
-const axios = require('axios');
+module.exports.config = {
+		name: "sim",
+		version: "1.0.0",
+		role: 0,
+		aliases: ["Sim"],
+		credits: "jerome",
+		description: "Talk to sim",
+		cooldown: 0,
+		hasPrefix: false
+};
 
-module.exports = {
-  config: {
-    name: "sim",
-    version: 2.0,
-    author: "Sandip | ArYAN",
-    longDescription: {
-      en: "FunChat with SimiSimi",
-    },
-    category: "simisimi",
-    guide: {
-      en: ".sim [ chat ]",
-    },
-  },
-  t: async function (a) {
-    try {
-      const response = await axios.get(`https://itsaryan.onrender.com/api/sim?chat=${a}&lang=en`);
-      return response.data.answer;
-    } catch (error) {
-      throw error;
-    }
-  },
-  handleCommand: async function ({ message, event, args, api }) {
-    try {
-      const a = encodeURIComponent(args.join(" "));
-      const result = await this.t(a);
-
-      message.reply({
-        body: `🔎|𝗦𝗶𝗺𝗶𝗦𝗶𝗺𝗶\n━━━━━━━━━━━━━\n\n${result}`,
-      }, (err, info) => {
-        api.onReply.set(info.messageID, {
-          commandName: this.config.name,
-          messageID: info.messageID,
-          author: event.senderID
-        });
-      });
-    } catch (error) {
-      console.error("Error:", error.message);
-    }
-  },
-  onStart: function (params) {
-    return this.handleCommand(params);
-  },
-  onReply: function (params) {
-    return this.handleCommand(params);
-  },
+module.exports.onStart = async function({ api, event, args }) {
+		const axios = require("axios");
+		let { messageID, threadID, senderID, body } = event;
+		let tid = threadID,
+				mid = messageID;
+		const content = encodeURIComponent(args.join(" "));
+		if (!args[0]) return api.sendMessage("Please type a message...", tid, mid);
+		try {
+				const res = await axios.get(`https://simsimi-api-pro.onrender.com/sim?query=${content}`);
+				const respond = res.data.respond;
+				if (res.data.error) {
+						api.sendMessage(`Error: ${res.data.error}`, tid, (error, info) => {
+								if (error) {
+										console.error(error);
+								}
+						}, mid);
+				} else {
+						api.sendMessage(respond, tid, (error, info) => {
+								if (error) {
+										console.error(error);
+								}
+						}, mid);
+				}
+		} catch (error) {
+				console.error(error);
+				api.sendMessage("An error occurred while fetching the data.", tid, mid);
+		}
 };
