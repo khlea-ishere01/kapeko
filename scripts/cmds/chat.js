@@ -12,13 +12,14 @@ module.exports = {
         countDown: 5,
         role: 0,
         author: "Annaleiah",
-        startTime: null // Add startTime property to config
+        scheduledTurnOn: null // Add property to store scheduled turn on time
     },
     
     langs: {
         en: {
             "onlyAdmin": "You do not have permission to use this command!",
-            "chatEnabled": "Chat is now enabled. Members can now freely chat!"
+            "chatEnabled": "Chat is now enabled. Members can now freely chat!",
+            "chatDisabled": "Chat is now disabled. Members who chat will be kicked!"
         }
     },
 
@@ -36,7 +37,7 @@ module.exports = {
             if (args[1]) {
                 this.config.startTime = args[1]; // Assuming args[1] is in "HH:mm:ss" format
                 // Schedule the activation of chat at the specified time
-                scheduleChatActivation(this.config.startTime, threadID);
+                scheduleChatActivation(this.config.startTime, threadID, true);
             }
             
             message.reply("Chat off is now disabled. Members can now freely chat.");
@@ -48,6 +49,13 @@ module.exports = {
             const threadID = event.threadID; 
             global.zenLeaf[threadID] = global.zenLeaf[threadID] || {};
             global.zenLeaf[threadID].chatEnabled = false;
+            
+            // Set scheduled turn on time if provided in args[1] (format: HH:mm:ss)
+            if (args[1]) {
+                this.config.scheduledTurnOn = args[1]; // Assuming args[1] is in "HH:mm:ss" format
+                // Schedule the activation of chat at the specified time
+                scheduleChatActivation(this.config.scheduledTurnOn, threadID, false);
+            }
             
             message.reply("Chat off enabled. Members who chat will be kicked.");
         }
@@ -65,16 +73,16 @@ module.exports = {
                         console.error(err);
                     }
                 });
-                message.reply("CHAT DETECTED | The group is currently on chat off. You have been kicked from the group.");
+                message.reply(getLang("chatDisabled"));
             }
         }
     }
 };
 
 // Function to schedule chat activation
-function scheduleChatActivation(startTime, threadID) {
-    // Parse startTime into hours, minutes, and seconds
-    const [hours, minutes, seconds] = startTime.split(':').map(Number);
+function scheduleChatActivation(time, threadID, turnOn) {
+    // Parse time into hours, minutes, and seconds
+    const [hours, minutes, seconds] = time.split(':').map(Number);
 
     // Current time
     const now = new Date();
@@ -82,23 +90,27 @@ function scheduleChatActivation(startTime, threadID) {
     const currentMinutes = now.getMinutes();
     const currentSeconds = now.getSeconds();
 
-    // Calculate milliseconds until startTime
-    let millisecondsUntilStartTime = 0;
+    // Calculate milliseconds until time
+    let millisecondsUntilTime = 0;
     if (hours > currentHours || (hours === currentHours && minutes > currentMinutes) || (hours === currentHours && minutes === currentMinutes && seconds > currentSeconds)) {
         // Schedule for today
-        const startTimeToday = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, seconds);
-        millisecondsUntilStartTime = startTimeToday.getTime() - now.getTime();
+        const scheduledTimeToday = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, seconds);
+        millisecondsUntilTime = scheduledTimeToday.getTime() - now.getTime();
     } else {
         // Schedule for tomorrow
         const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, hours, minutes, seconds);
-        millisecondsUntilStartTime = tomorrow.getTime() - now.getTime();
+        millisecondsUntilTime = tomorrow.getTime() - now.getTime();
     }
 
     // Set timeout to activate chat
     setTimeout(() => {
-        // Implement logic to activate chat here
-        activateChat(threadID);
-    }, millisecondsUntilStartTime);
+        // Implement logic to activate or deactivate chat here based on 'turnOn'
+        if (turnOn) {
+            activateChat(threadID);
+        } else {
+            deactivateChat(threadID);
+        }
+    }, millisecondsUntilTime);
 }
 
 function activateChat(threadID) {
@@ -110,6 +122,21 @@ function activateChat(threadID) {
 
     // Notify everyone in the thread that chat is enabled
     api.sendMessage(getLang("chatEnabled"), threadID, (err) => {
+        if (err) {
+            console.error("Failed to send message:", err);
+        }
+    });
+}
+
+function deactivateChat(threadID) {
+    // Implement logic to deactivate chat functionality here
+    // For example:
+    global.zenLeaf[threadID].chatEnabled = false;
+    const api = require('some_api_module'); // Replace with your API module
+    const getLang = (lang) => module.exports.langs.en[lang]; // Language function
+
+    // Notify everyone in the thread that chat is disabled
+    api.sendMessage(getLang("chatDisabled"), threadID, (err) => {
         if (err) {
             console.error("Failed to send message:", err);
         }
