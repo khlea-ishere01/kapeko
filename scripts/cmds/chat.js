@@ -92,11 +92,11 @@ function scheduleChatActivation(time, threadID) {
 
     const millisecondsUntilTime = scheduledTime - now;
 
-    console.log(`Scheduling chat activation for ${scheduledTime} which is in ${millisecondsUntilTime} milliseconds.`);
+    console.log(`Scheduling chat activation for ${scheduledTime.toLocaleString()} which is in ${millisecondsUntilTime} milliseconds.`);
 
     // Set timeout to activate chat
     setTimeout(() => {
-        console.log(`Activating chat for threadID: ${threadID} at ${new Date()}`);
+        console.log(`Activating chat for threadID: ${threadID} at ${new Date().toLocaleString()}`);
         activateChat(threadID);
     }, millisecondsUntilTime);
 }
