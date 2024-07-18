@@ -12,19 +12,23 @@ module.exports = {
         countDown: 5,
         role: 0,
         author: "Annaleiah",
-        scheduledTurnOn: null // Add property to store scheduled turn on time
+        scheduledTurnOn: null // Store scheduled turn on time
     },
     
     langs: {
         en: {
             "onlyAdmin": "You do not have permission to use this command!",
             "chatEnabled": "Chat is now enabled. Members can now freely chat!",
-            "chatDisabled": "Chat is now disabled. Members who chat will be kicked!"
+            "chatDisabled": "Chat is now disabled. Members who chat will be kicked!",
+            "chatWillEnableAt": "Chat is now disabled. It will be enabled again at {{time}}."
         }
     },
 
     onStart: async function ({ message, args, role, getLang, event }) {
-        if (args[0] === "on") {
+        const command = args[0];
+        const time = args[1];
+
+        if (command === "on") {
             if (role < 1) {
                 return message.reply(getLang("onlyAdmin")); 
             }
@@ -33,15 +37,8 @@ module.exports = {
             global.zenLeaf[threadID] = global.zenLeaf[threadID] || {};
             global.zenLeaf[threadID].chatEnabled = true;
             
-            // Set startTime if provided in args[1] (format: HH:mm:ss)
-            if (args[1]) {
-                this.config.startTime = args[1]; // Assuming args[1] is in "HH:mm:ss" format
-                // Schedule the activation of chat at the specified time
-                scheduleChatActivation(this.config.startTime, threadID, true);
-            }
-            
-            message.reply("Chat off is now disabled. Members can now freely chat.");
-        } else if (args[0] === "off") {
+            message.reply("Chat is now enabled. Members can now freely chat.");
+        } else if (command === "off") {
             if (role < 1) {
                 return message.reply(getLang("onlyAdmin")); 
             }
@@ -49,15 +46,15 @@ module.exports = {
             const threadID = event.threadID; 
             global.zenLeaf[threadID] = global.zenLeaf[threadID] || {};
             global.zenLeaf[threadID].chatEnabled = false;
-            
-            // Set scheduled turn on time if provided in args[1] (format: HH:mm:ss)
-            if (args[1]) {
-                this.config.scheduledTurnOn = args[1]; // Assuming args[1] is in "HH:mm:ss" format
-                // Schedule the activation of chat at the specified time
-                scheduleChatActivation(this.config.scheduledTurnOn, threadID, false);
+
+            // Schedule chat to be enabled at the specified time
+            if (time) {
+                this.config.scheduledTurnOn = time;
+                scheduleChatActivation(time, threadID);
+                message.reply(getLang("chatWillEnableAt").replace("{{time}}", time));
+            } else {
+                message.reply("Chat is now disabled. Members who chat will be kicked.");
             }
-            
-            message.reply("Chat off enabled. Members who chat will be kicked.");
         }
     },
 
@@ -80,63 +77,34 @@ module.exports = {
 };
 
 // Function to schedule chat activation
-function scheduleChatActivation(time, threadID, turnOn) {
+function scheduleChatActivation(time, threadID) {
     // Parse time into hours, minutes, and seconds
     const [hours, minutes, seconds] = time.split(':').map(Number);
 
     // Current time
     const now = new Date();
-    const currentHours = now.getHours();
-    const currentMinutes = now.getMinutes();
-    const currentSeconds = now.getSeconds();
+    const scheduledTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, seconds);
 
-    // Calculate milliseconds until time
-    let millisecondsUntilTime = 0;
-    if (hours > currentHours || (hours === currentHours && minutes > currentMinutes) || (hours === currentHours && minutes === currentMinutes && seconds > currentSeconds)) {
-        // Schedule for today
-        const scheduledTimeToday = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, seconds);
-        millisecondsUntilTime = scheduledTimeToday.getTime() - now.getTime();
-    } else {
-        // Schedule for tomorrow
-        const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, hours, minutes, seconds);
-        millisecondsUntilTime = tomorrow.getTime() - now.getTime();
+    // If the scheduled time is earlier in the day, schedule for the next day
+    if (scheduledTime <= now) {
+        scheduledTime.setDate(scheduledTime.getDate() + 1);
     }
+
+    const millisecondsUntilTime = scheduledTime - now;
 
     // Set timeout to activate chat
     setTimeout(() => {
-        // Implement logic to activate or deactivate chat here based on 'turnOn'
-        if (turnOn) {
-            activateChat(threadID);
-        } else {
-            deactivateChat(threadID);
-        }
+        activateChat(threadID);
     }, millisecondsUntilTime);
 }
 
 function activateChat(threadID) {
-    // Implement logic to activate chat functionality here
-    // For example:
     global.zenLeaf[threadID].chatEnabled = true;
-    const api = require('some_api_module'); // Replace with your API module
+    const api = require('api'); // Replace with your API module
     const getLang = (lang) => module.exports.langs.en[lang]; // Language function
 
     // Notify everyone in the thread that chat is enabled
     api.sendMessage(getLang("chatEnabled"), threadID, (err) => {
-        if (err) {
-            console.error("Failed to send message:", err);
-        }
-    });
-}
-
-function deactivateChat(threadID) {
-    // Implement logic to deactivate chat functionality here
-    // For example:
-    global.zenLeaf[threadID].chatEnabled = false;
-    const api = require('some_api_module'); // Replace with your API module
-    const getLang = (lang) => module.exports.langs.en[lang]; // Language function
-
-    // Notify everyone in the thread that chat is disabled
-    api.sendMessage(getLang("chatDisabled"), threadID, (err) => {
         if (err) {
             console.error("Failed to send message:", err);
         }
