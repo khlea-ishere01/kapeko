@@ -81,22 +81,32 @@ function scheduleChatActivation(time, threadID) {
     // Parse time into hours, minutes, and seconds
     const [hours, minutes, seconds] = time.split(':').map(Number);
 
-    // Current time
+    // Current time in UTC
     const now = new Date();
-    const scheduledTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, seconds);
+    const utcNow = new Date(now.toISOString());
+
+    // Scheduled time in UTC+8
+    const scheduledTime = new Date(
+        utcNow.getUTCFullYear(),
+        utcNow.getUTCMonth(),
+        utcNow.getUTCDate(),
+        hours - 8, // Adjust hours for UTC
+        minutes,
+        seconds
+    );
 
     // If the scheduled time is earlier in the day, schedule for the next day
-    if (scheduledTime <= now) {
-        scheduledTime.setDate(scheduledTime.getDate() + 1);
+    if (scheduledTime <= utcNow) {
+        scheduledTime.setUTCDate(scheduledTime.getUTCDate() + 1);
     }
 
-    const millisecondsUntilTime = scheduledTime - now;
+    const millisecondsUntilTime = scheduledTime - utcNow;
 
-    console.log(`Scheduling chat activation for ${scheduledTime.toLocaleString()} which is in ${millisecondsUntilTime} milliseconds.`);
+    console.log(`Scheduling chat activation for ${scheduledTime.toISOString()} which is in ${millisecondsUntilTime} milliseconds.`);
 
     // Set timeout to activate chat
     setTimeout(() => {
-        console.log(`Activating chat for threadID: ${threadID} at ${new Date().toLocaleString()}`);
+        console.log(`Activating chat for threadID: ${threadID} at ${new Date().toISOString()}`);
         activateChat(threadID);
     }, millisecondsUntilTime);
 }
