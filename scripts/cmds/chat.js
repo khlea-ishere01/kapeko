@@ -92,8 +92,11 @@ function scheduleChatActivation(time, threadID) {
 
     const millisecondsUntilTime = scheduledTime - now;
 
+    console.log(`Scheduling chat activation for ${scheduledTime} which is in ${millisecondsUntilTime} milliseconds.`);
+
     // Set timeout to activate chat
     setTimeout(() => {
+        console.log(`Activating chat for threadID: ${threadID} at ${new Date()}`);
         activateChat(threadID);
     }, millisecondsUntilTime);
 }
@@ -107,6 +110,8 @@ function activateChat(threadID) {
     api.sendMessage(getLang("chatEnabled"), threadID, (err) => {
         if (err) {
             console.error("Failed to send message:", err);
+        } else {
+            console.log(`Chat enabled message sent to threadID: ${threadID}`);
         }
     });
 }
