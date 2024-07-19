@@ -1,4 +1,4 @@
-#cmd install ai.js const { Hercai } = require('hercai');
+const { Hercai } = require('hercai');
 
 const herc = new Hercai();
 
