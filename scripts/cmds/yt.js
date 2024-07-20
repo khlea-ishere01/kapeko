@@ -1,3 +1,8 @@
+const ytdl-core = require("ytdl-core")
+const simple-youtube-api = require("simple-youtube-api")
+const fs-extra = require("fs-extra")
+const axios = require("axios")
+
 module.exports.config = {
   name: "yt",
   version: "1.0.0",
@@ -7,12 +12,6 @@ module.exports.config = {
   category: "media",
   guide: "[title]",
   cooldowns: 10,
-  dependencies: {
-    "ytdl-core": "",
-    "simple-youtube-api": "",
-    "fs-extra": "",
-    "axios": ""
-  },
   envConfig: {
     "YOUTUBE_API":   "AIzaSyDBOpnGGz225cPwHlJQs8OMRtxOjSUm73I"
   }        
