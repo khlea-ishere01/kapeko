@@ -51,7 +51,7 @@ module.exports.onStart = async function ({ args, usersData, threadsData, api, ev
   var ThreadInfo = event.threadID;
 
   var background = [
-    "https://i.imgur.com/BJAJv3l.png"
+    "https://imgur.com/da5GfX8.jpeg"
   ];
   var rd = background[Math.floor(Math.random() * background.length)];
 
