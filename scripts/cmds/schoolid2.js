@@ -38,7 +38,7 @@ module.exports.onText = (ctx, name, maxWidth) => {
         });
 } 
 
-module.exports.onStart = async function ({ args, Users, Threads, api, event, Currencies }) {
+module.exports.onStart = async function ({ args, usersData, threadsData, api, event, Currencies }) {
   const { loadImage, createCanvas } = require("canvas");
   const fs = require("fs");
   const axios = require("axios");
