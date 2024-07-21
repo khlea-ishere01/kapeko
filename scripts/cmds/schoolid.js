@@ -81,7 +81,7 @@ module.exports.onStart = async function ({ args, usersData, threadsData, api, ev
   ctx.textAlign = "start";
 
   const lines = await this.onText(ctx, name, 2000);
-  ctx.fillText(lines.join('\n'), 150, 498);//comment
+  ctx.fillText(lines.join('\n'), 150, 528);//comment
   ctx.beginPath();
 
   // Adjust the position and size here
