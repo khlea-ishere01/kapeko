@@ -1,15 +1,11 @@
 module.exports.config = {
   name: "schoolid2",
   version: "1.0.0",
-  hasPermssion: 0,
-  credits: "Kaiden",
+  role: 0,
+  author: "Kaiden",
   description: "enroll na mga bobo",
-  commandCategory: "Giáº£i trÃ­",
+  category: "Giáº£i trÃ­",
   usages: "@mention",
-  dependencies: {
-        "axios": "",
-        "fs-extra": ""
-  },
   cooldowns: 0
 };
 
@@ -44,15 +40,15 @@ module.exports.wrapText = (ctx, name, maxWidth) => {
 
 module.exports.run = async function ({ args, Users, Threads, api, event, Currencies }) {
   const { loadImage, createCanvas } = require("canvas");
-  const fs = global.nodemodule["fs-extra"];
-  const axios = global.nodemodule["axios"];
+  const fs = require("fs");
+  const axios = require("axios");
   let pathImg = __dirname + "/cache/background.png";
   let pathAvt1 = __dirname + "/cache/Avtmot.png";
 
 
   var id = Object.keys(event.mentions)[0] || event.senderID;
-  var name = await Users.getNameUser(id);
-  var ThreadInfo = await api.getThreadInfo(event.threadID);
+  var name = await usersData.getName(event.senderID);
+  var ThreadInfo = event.threadID;
 
   var background = [
 
@@ -95,7 +91,7 @@ module.exports.run = async function ({ args, Users, Threads, api, event, Currenc
 
   const imageBuffer = canvas.toBuffer();
   fs.writeFileSync(pathImg, imageBuffer);
-  fs.removeSync(pathAvt1);
+  fs.unlinkSync(pathAvt1);
   return api.sendMessage({ body: ` `, attachment: fs.createReadStream(pathImg) },
       event.threadID,
       () => fs.unlinkSync(pathImg),
