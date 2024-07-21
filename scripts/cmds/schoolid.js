@@ -57,7 +57,7 @@ module.exports.onStart = async function ({ args, usersData, threadsData, api, ev
 
   let getAvtmot = (
     await axios.get(
-      `https://graph.facebook.com/${id}/picture?width=346&height=346&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`,
+      `https://graph.facebook.com/${id}/picture?width=232&height=232&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`,
       { responseType: "arraybuffer" }
     )
   ).data;
