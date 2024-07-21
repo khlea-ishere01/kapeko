@@ -77,7 +77,7 @@ module.exports.onStart = async function ({ args, usersData, threadsData, api, ev
   let ctx = canvas.getContext("2d");
   ctx.drawImage(baseImage, 0, 0, canvas.width, canvas.height);
   ctx.font = "400 23px Arial";
-  ctx.fillStyle = "#c2a24a";
+  ctx.fillStyle = "#000000";
   ctx.textAlign = "start";
 
   const lines = await this.onText(ctx, name, 2000);
