@@ -85,7 +85,7 @@ module.exports.onStart = async function ({ args, usersData, threadsData, api, ev
   ctx.beginPath();
 
   // Adjust the position and size here
-  ctx.drawImage(baseAvt1, 155, 153, 232, 232);
+  ctx.drawImage(baseAvt1, 114, 151, 232, 232);
 
   const imageBuffer = canvas.toBuffer();
   fs.writeFileSync(pathImg, imageBuffer);
