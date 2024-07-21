@@ -51,9 +51,8 @@ module.exports.onStart = async function ({ args, usersData, threadsData, api, ev
   var ThreadInfo = event.threadID;
 
   var background = [
-
     "https://i.imgur.com/BJAJv3l.png"
-];
+  ];
   var rd = background[Math.floor(Math.random() * background.length)];
 
   let getAvtmot = (
@@ -77,17 +76,16 @@ module.exports.onStart = async function ({ args, usersData, threadsData, api, ev
   let canvas = createCanvas(baseImage.width, baseImage.height);
   let ctx = canvas.getContext("2d");
   ctx.drawImage(baseImage, 0, 0, canvas.width, canvas.height);
-    ctx.font = "400 23px Arial";
-          ctx.fillStyle = "#c2a24a";
-          ctx.textAlign = "start";
+  ctx.font = "400 23px Arial";
+  ctx.fillStyle = "#c2a24a";
+  ctx.textAlign = "start";
 
+  const lines = await this.onText(ctx, name, 2000);
+  ctx.fillText(lines.join('\n'), 270, 790);//comment
+  ctx.beginPath();
 
-          const lines = await this.onText(ctx, name, 2000);
-          ctx.fillText(lines.join('\n'), 270,790);//comment
-          ctx.beginPath();
-
-
-  ctx.drawImage(baseAvt1, 171, 230, 346, 346);
+  // Adjust the position and size here
+  ctx.drawImage(baseAvt1, 180, 240, 320, 320);
 
   const imageBuffer = canvas.toBuffer();
   fs.writeFileSync(pathImg, imageBuffer);
@@ -96,7 +94,7 @@ module.exports.onStart = async function ({ args, usersData, threadsData, api, ev
       event.threadID,
       () => fs.unlinkSync(pathImg),
       event.messageID);
-    }
+}
 
 
 //nothing
