@@ -9,7 +9,7 @@ module.exports.config = {
   cooldowns: 0
 };
 
-module.exports.wrapText = (ctx, name, maxWidth) => {
+module.exports.onText = (ctx, name, maxWidth) => {
         return new Promise(resolve => {
                 if (ctx.measureText(name).width < maxWidth) return resolve([name]);
                 if (ctx.measureText('W').width > maxWidth) return resolve(null);
@@ -38,7 +38,7 @@ module.exports.wrapText = (ctx, name, maxWidth) => {
         });
 } 
 
-module.exports.run = async function ({ args, Users, Threads, api, event, Currencies }) {
+module.exports.onStart = async function ({ args, Users, Threads, api, event, Currencies }) {
   const { loadImage, createCanvas } = require("canvas");
   const fs = require("fs");
   const axios = require("axios");
@@ -82,7 +82,7 @@ module.exports.run = async function ({ args, Users, Threads, api, event, Currenc
           ctx.textAlign = "start";
 
 
-          const lines = await this.wrapText(ctx, name, 2000);
+          const lines = await this.onText(ctx, name, 2000);
           ctx.fillText(lines.join('\n'), 270,790);//comment
           ctx.beginPath();
 
