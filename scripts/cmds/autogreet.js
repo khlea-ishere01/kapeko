@@ -148,16 +148,5 @@ module.exports = {
         return api.sendMessage(message, event.threadID, event.messageID);
       }
     }
-
-    for (const [replies, message] of Object.entries(reply)) {
-      const split = replies.split(" ");
-      if (split) {
-        for (const word of split) {
-          if (event.body && event.body.toLowerCase().includes(word)) {
-            return api.sendMessage(message, event.threadID, event.messageID);
-          }
-        }
-      }
-    }
   }
 };
