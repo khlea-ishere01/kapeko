@@ -1,5 +1,5 @@
 const { put, post } = require("axios"),
-qz = "https://quiz-t3jj.onrender.com", // hos this https://github.com/Jnn69/quiz and replace with your api url 
+qz = "https://quiz-ynmd.onrender.com", // hos this https://github.com/Jnn69/quiz and replace with your api url 
 rewards = Math.floor(Math.random() * (1000 - 500) + 500);
 async function onReply({ message: { unsend, reply }, Reply: { playerid, messageID, answer }, usersData, event: { body, senderID } }) {
   if (senderID !== playerid) return reply("⚠ You are not the player of this question!");
