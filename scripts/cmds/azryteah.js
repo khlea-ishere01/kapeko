@@ -1,6 +1,6 @@
 module.exports = {
         config: {
-                        name: "azry",
+                        name: "xia",
                         version: "1.0",
                         author: "Jaychris Garcia",
                         countDown: 5,
@@ -15,6 +15,6 @@ onChat: async function({
         message,
         getLang
 }) {
-        if (event.body && event.body.toLowerCase() == "azry") return message.reply("Hi! I'm Azry 🌞 How may I help you today? 🙋❤️");
+        if (event.body && event.body.toLowerCase() == "xia") return message.reply("I'm here! ❤️ How may I help u today? 🙋");
 }
 };
