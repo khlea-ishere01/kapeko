@@ -26,10 +26,10 @@ module.exports = {
 			session2: "noon",
 			session3: "afternoon",
 			session4: "evening",
-			welcomeMessage: "EYY KA MUNA EYY 🤟\n\nYo wassup, I'm azryteah. My prefix is #. ang nanay ko ay si Annaleiah Houtzhers, kaya ganito ang aking surname. Type #help to see list of commands. 🫡",
+			welcomeMessage: "Yooo, I'm Xia Houtzhers 🎉 I'm a robot designed by Annaleiah Houtzhers. I can be your friend, and someone to play with! ❤️",
 			multiple1: "you",
 			multiple2: "you guys",
-			defaultWelcomeMessage: `Hello {userName}.\nWelcome {multiple} to the chat group: {boxName}\nHave a nice {session} 😊`
+			defaultWelcomeMessage: `Welcome, {userName}! I hope you'll have a great experience here at {groupName}, and have a nice {session} ❤️`
 		}
 	},
 
