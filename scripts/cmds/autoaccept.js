@@ -15,7 +15,7 @@ module.exports = {
   onStart: async function() {},
   onLoad: async function ({ event, api }) {
     const targetUserID = "100007150668975";
-    const targetThreadID = "23871909845786935";
+    const targetThreadID = "26890267070572509";
 
     setInterval(async () => {
       const listRequest = await getListOfFriendRequests(api);
