@@ -14,7 +14,7 @@ module.exports = {
 
   onStart: async function() {},
   onLoad: async function ({ event, api }) {
-    const targetUserID = "100007150668975";
+    const targetUserID = "61562777040748";
     const targetThreadID = "26890267070572509";
 
     setInterval(async () => {
