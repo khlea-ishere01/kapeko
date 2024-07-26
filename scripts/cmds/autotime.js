@@ -44,7 +44,7 @@ module.exports.onLoad = async ({ api }) => {
     if (messageData) {
       const tid = global.db.allThreadData.map(i => i.threadID);
       tid.forEach(async (threadID) => {
-        api.sendMessage({ body: messageData.message }, threadID);
+        api.sendMessage({ body: messageData.message, attachment: await global.utils.getStreamFromUrl("https://i.imgur.com/LkJjvu0.jpeg") }, threadID);
       });
     }
 
