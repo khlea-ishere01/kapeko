@@ -10,8 +10,8 @@ module.exports.config = {
   countDown: 3
 };
 
-module.exports.onLoad = async ({ api }) => {
-  const arrayData = {
+module.exports.onLoad = async ({ api }) {
+  const arrayData = [
      "06:00:00 AM": {
         message: "THIS IS AN AUTOMATED MESSAGE \n▬▬▬▬▬▬▬▬▬▬▬▬\nTIMECHECK: 06:00 AM\n\n Use the command #educgc to be added to Azry's educ/music/fun room! Please add friend bot first before using command."
       },
@@ -35,7 +35,7 @@ module.exports.onLoad = async ({ api }) => {
       }
 
     // Add more messages for other times as needed
-  };
+  ];
 
   const checkTimeAndSendMessage = () => {
     const now = moment().tz('Asia/Manila');
