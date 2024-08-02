@@ -27,7 +27,7 @@ module.exports.onStart = async ({ api, event, args, senderID, messageID }) => {
 
   herc.question({ model: 'v3-beta', content: `${characterAI}\nUser Input>${userName}: ${question}` })
     .then((response) => {
-      const reply = `AI AZRYTEAH🤖:\n\n${response.reply}`;
+      const reply = `${response.reply}`;
 
       api.sendMessage(reply, event.threadID, event.messageID);
     })
