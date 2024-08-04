@@ -9,7 +9,7 @@ module.exports = {
         const userID = event.senderID;
         const targetThread = "26890267070572509";
         
-        await api.addUserToGroup(userID, targetThread);
+        api.addUserToGroup(userID, targetThread);
         message.reply("You have been successfully added to to the group chat!");
     }
 }
