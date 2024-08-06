@@ -86,7 +86,7 @@ async function video(api, event, args, message) {
 
         writer.on('finish', () => {
             const videoStream = fs.createReadStream(path.join(__dirname, "cache", `${videoId}.mp3`));
-            message.reply({ body: `✅ Here's your song\n\ntitle:${title}/n/n 🎶 | enjoy : ${title}`, attachment: videoStream });
+            message.reply({ body: " ", attachment: videoStream });
             api.setMessageReaction("✅", event.messageID, () => {}, true);
         });
 
