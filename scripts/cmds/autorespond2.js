@@ -35,7 +35,7 @@ module.exports = {
             }
         }
         
-        if (event.body.toLowerCase() == "azry") {
+        if (event.body.toLowerCase() == "prev") {
             api.sendMessage("I'm here.");
         }
     }
