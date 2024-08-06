@@ -50,7 +50,7 @@ module.exports = {
         await threadsData.set(event.threadID, isSetNoti ? !value : value, keySetData);
         
         if (value) {
-            return
+            return api.setMessageReaction("❌", event.messageID, () => {}, true);
         }
     }
 };
