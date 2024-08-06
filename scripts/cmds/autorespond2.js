@@ -6,7 +6,7 @@ module.exports = {
         author: "Micazhla",
         longDescription: "React on chats based on emojis"
     },
-    onStart: async function ({ }) => {},
+    onStart: async function ({ }) {},
     onChat: async function ({ api, event }) => {
         const reactWord = {
             "💗": [ "azry", "azryteah", "az", "mica", "micazhla", "cazhla", "jamaica", "hi", "hii", "hiii", "hiiii", "hello", "helloo", "hellooo", "helloooo", "yo", "ey", "eyy", "eyyy", "hallo", "hallu", "hellu", "hey", "hi'ed", "hello'ed", "ayo" ],
