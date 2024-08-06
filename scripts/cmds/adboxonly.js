@@ -26,7 +26,7 @@ module.exports = {
         }
     },
 
-    onStart: async function ({ args, message, event, threadsData, getLang }) {
+    onStart: async function ({ args, message, event, threadsData, getLang, api }) {
         let isSetNoti = false;
         let value;
         let keySetData = "data.onlyAdminBox";
