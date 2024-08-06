@@ -56,10 +56,4 @@ module.exports = {
                         return message.reply(getLang("syntaxError"));
 
                 await threadsData.set(event.threadID, isSetNoti ? !value : value, keySetData);
-
-                if (isSetNoti)
-                        return message.reply(value ? getLang("turnedOnNoti") : getLang("turnedOffNoti"));
-                else
-                        return message.reply(value ? getLang("turnedOn") : getLang("turnedOff"));
-        }
 };
