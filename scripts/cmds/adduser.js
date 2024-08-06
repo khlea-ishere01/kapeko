@@ -36,13 +36,13 @@ module.exports = {
                 },
                 en: {
                         alreadyInGroup: "Already in group",
-                        successAdd: "- Successfully added %1 members to the group",
+                        successAdd: "✅",
                         failedAdd: "- Failed to add %1 members to the group",
                         approve: "- Added %1 members to the approval list",
                         invalidLink: "Please enter a valid facebook link",
                         cannotGetUid: "Cannot get uid of this user",
                         linkNotExist: "This profile url does not exist",
-                        cannotAddUser: "Bot is blocked or this user blocked strangers from adding to the group"
+                        cannotAddUser: "ni block po ako."
                 }
         },
 
