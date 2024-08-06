@@ -26,10 +26,10 @@ module.exports = {
 			session2: "noon",
 			session3: "afternoon",
 			session4: "evening",
-			welcomeMessage: "Yooo, I'm Azryteah Houtzhers 🎉 I'm a robot designed by Annaleiah Houtzhers. I can be your friend, and someone to play with! ❤️",
-			multiple1: "you",
-			multiple2: "you guys",
-			defaultWelcomeMessage: `Welcome, {userName}! I hope you'll have a great experience here at {groupName}, and have a nice {session} ❤️`
+			welcomeMessage: "Successfully Connected.",
+			multiple1: "sayo",
+			multiple2: "sainyo",
+			defaultWelcomeMessage: `Welcome po ${multiple}.`
 		}
 	},
 
