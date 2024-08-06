@@ -24,24 +24,14 @@ module.exports = {
         },
 
         langs: {
-                vi: {
-                        alreadyInGroup: "Đã có trong nhóm",
-                        successAdd: "- Đã thêm thành công %1 thành viên vào nhóm",
-                        failedAdd: "- Không thể thêm %1 thành viên vào nhóm",
-                        approve: "- Đã thêm %1 thành viên vào danh sách phê duyệt",
-                        invalidLink: "Vui lòng nhập link facebook hợp lệ",
-                        cannotGetUid: "Không thể lấy được uid của người dùng này",
-                        linkNotExist: "Profile url này không tồn tại",
-                        cannotAddUser: "Bot bị chặn tính năng hoặc người dùng này chặn người lạ thêm vào nhóm"
-                },
                 en: {
                         alreadyInGroup: "Already in group",
                         successAdd: "✅",
                         failedAdd: "- Failed to add %1 members to the group",
-                        approve: "- Added %1 members to the approval list",
+                        approve: "Added to approval list.",
                         invalidLink: "Please enter a valid facebook link",
-                        cannotGetUid: "Cannot get uid of this user",
-                        linkNotExist: "This profile url does not exist",
+                        cannotGetUid: "Cannot get Uid of User",
+                        linkNotExist: "Profile Url doesn't exist.",
                         cannotAddUser: "ni block po ako."
                 }
         },
