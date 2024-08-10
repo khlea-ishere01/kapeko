@@ -7,7 +7,7 @@ module.exports = {
 		version: "1.4",
 		author: "NTKhang",
 		envConfig: {
-			allow: true
+			allow: false
 		},
 		category: "events"
 	},
